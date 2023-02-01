@@ -27,17 +27,16 @@ class PagingTabBar : UIView {
     layout.scrollDirection = .horizontal
     
     let inset : CGFloat = 16.0
-    layout.itemSize = CGSize(width: (UIScreen.main.bounds.width - inset*2.0)/5.0, height: cellHeight)
-    layout.sectionInset = UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+    layout.itemSize = CGSize(width: (UIScreen.main.bounds.width)/5.0, height: cellHeight)
+    layout.sectionInset = UIEdgeInsets(top: inset, left: 0, bottom: inset, right: 0)
     layout.minimumLineSpacing = 0.0
     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    collectionView.backgroundColor = .white
     collectionView.showsHorizontalScrollIndicator = false
     collectionView.delegate = self
     collectionView.dataSource = self
     
-    
+    collectionView.register(PagingTabBarCell.self, forCellWithReuseIdentifier: PagingTabBarCell.identifier)
     return collectionView
   }()
   
@@ -58,6 +57,7 @@ class PagingTabBar : UIView {
   
   func setupLayout() {
     addSubview(collectionView)
+    collectionView.backgroundColor = .white
     collectionView.snp.makeConstraints {
       $0.edges.equalToSuperview()
     }
@@ -75,7 +75,7 @@ extension PagingTabBar : UICollectionViewDataSource {
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PagingTabBarCell.identifier, for: indexPath) as? PagingTabBarCell else {
       return UICollectionViewCell()
     }
-
+    cell.setupView(title: categoryTitleList[indexPath.row])
     return cell
   }
 }
