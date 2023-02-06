@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class MainViewController : UIViewController {
   
@@ -14,6 +15,7 @@ class MainViewController : UIViewController {
   private let categoryTitleList = ["홈", "추천", "신상품", "베스트", "알뜰쇼핑", "건강관리", "이벤트"]
   
   lazy var pagingTabBar = PagingTabBar(categoryTitleList: categoryTitleList)
+  lazy var pagingView = PagingView(categoryTitleList: categoryTitleList, pagingTabBar: pagingTabBar)
   
   // MARK: - LifeCycle
   override func viewDidLoad() {
@@ -23,7 +25,7 @@ class MainViewController : UIViewController {
   
   // MARK: - Functions
   private func setupLayout() {
-    [pagingTabBar].forEach {
+    [pagingTabBar, pagingView].forEach {
       view.addSubview($0)
     }
     
@@ -31,6 +33,12 @@ class MainViewController : UIViewController {
       $0.top.equalTo(view.safeAreaLayoutGuide)
       $0.leading.trailing.equalToSuperview()
       $0.height.equalTo(pagingTabBar.cellHeight)
+    }
+    
+    pagingView.snp.makeConstraints {
+      $0.top.equalTo(pagingTabBar.snp.bottom)
+      $0.leading.trailing.equalToSuperview()
+      $0.bottom.equalTo(view.safeAreaLayoutGuide)
     }
   }
 }

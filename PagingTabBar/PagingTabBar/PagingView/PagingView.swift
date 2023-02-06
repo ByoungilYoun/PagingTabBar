@@ -26,6 +26,7 @@ class PagingView : UIView {
     collectionView.delegate = self
     collectionView.dataSource = self
     collectionView.register(PagingCollectionViewCell.self, forCellWithReuseIdentifier: PagingCollectionViewCell.identifier)
+    collectionView.backgroundColor = .white
     return collectionView
   }()
   
@@ -89,6 +90,6 @@ extension PagingView : UICollectionViewDelegateFlowLayout {
   // MARK: - PagingDelegate
 extension PagingView : PagingDelegate {
   func didTapPagingTabBarCell(scrollTo indexPath: IndexPath) {
-    collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+    collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
   }
 }
